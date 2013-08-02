@@ -10,6 +10,7 @@ namespace DotLastFm.Api
     using Models;
     using Models.Wrappers;
     using Rest;
+    using System;
 
     /// <summary>
     /// Last.fm track API
@@ -46,6 +47,32 @@ namespace DotLastFm.Api
             if (wrapper != null)
             {
                 return wrapper.Tags;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Search for a track by track name. Returns track matches sorted by relevance.
+        /// </summary>
+        /// <param name="artist">(Optional) : Narrow your search by specifying an artist.</param>
+        /// <param name="track">(Required) : The track name</param>
+        /// <returns>List of tracks with metadata.</returns>
+        public IEnumerable<TrackSearchDetail> Search(string artist, string track)
+        {
+            var call = Rest.Method("track.search")
+                .AddParam("track", track);
+
+            if (!String.IsNullOrEmpty(artist))
+            {
+                call.AddParam("artist", artist);
+            }
+
+            var wrapper = call.Execute<TrackWithDetailsListWrapper>();
+
+            if (wrapper != null)
+            {
+                return wrapper.TrackSearch.Tracks;
             }
 
             return null;

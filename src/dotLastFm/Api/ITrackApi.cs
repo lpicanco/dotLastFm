@@ -66,5 +66,13 @@ namespace DotLastFm.Api
         /// <param name="track">The track name.</param>
         /// <returns>The Track object with metadata.</returns>
         IEnumerable<TrackSimilar> GetSimilar(string artist, string track);
+
+        /// <summary>
+        /// Search for a track by track name. Returns track matches sorted by relevance.
+        /// </summary>
+        /// <param name="artist">(Optional) : Narrow your search by specifying an artist.</param>
+        /// <param name="track">(Required) : The track name</param>
+        /// <returns>List of tracks with metadata.</returns>
+        IEnumerable<TrackSearchDetail> Search(string artist, string track);
     }
 }
